@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Chatting Application/Chatting Application.iml" filepath="$PROJECT_DIR$/Chatting Application/Chatting Application.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Group Chatting Application/Group Chatting Application.iml" filepath="$PROJECT_DIR$/Group Chatting Application/Group Chatting Application.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/chatting-application.iml" filepath="$PROJECT_DIR$/.idea/chatting-application.iml" />
+    </modules>
+  </component>
+</project>
