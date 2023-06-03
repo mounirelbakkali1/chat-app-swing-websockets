@@ -52,31 +52,37 @@ public class Client implements ActionListener {
         }
     }
 
-    
+
     public static void main(String[] args) {
         new Client();
-        
-        try {
-            Socket s = new Socket("127.0.0.1", 6001);
-            DataInputStream din = new DataInputStream(s.getInputStream());
-            dout = new DataOutputStream(s.getOutputStream());
-            
-            while(true) {
-                a1.setLayout(new BorderLayout());
-                String msg = din.readUTF();
-                JPanel panel =FonctionaliteCommain.formatLabel(msg,false);
+        Thread clientThread = new Thread(new ClientThread());
+        clientThread.start();
+    }
 
-                JPanel left = new JPanel(new BorderLayout());
-                left.add(panel, BorderLayout.LINE_START);
-                vertical.add(left);
-                
-                vertical.add(Box.createVerticalStrut(15));
-                a1.add(vertical, BorderLayout.PAGE_START);
-                
-                f.validate();
+    static class ClientThread implements Runnable {
+        public void run() {
+            try {
+                Socket s = new Socket("127.0.0.1", 6001);
+                DataInputStream din = new DataInputStream(s.getInputStream());
+                dout = new DataOutputStream(s.getOutputStream());
+
+                while(true) {
+                    a1.setLayout(new BorderLayout());
+                    String msg = din.readUTF();
+                    JPanel panel = FonctionaliteCommain.formatLabel(msg,false);
+
+                    JPanel left = new JPanel(new BorderLayout());
+                    left.add(panel, BorderLayout.LINE_START);
+                    vertical.add(left);
+
+                    vertical.add(Box.createVerticalStrut(15));
+                    a1.add(vertical, BorderLayout.PAGE_START);
+
+                    f.validate();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

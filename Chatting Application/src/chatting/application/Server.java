@@ -52,29 +52,35 @@ public class Server implements ActionListener {
             e.printStackTrace();
         }
     }
-    
 
-    
+
+
     public static void main(String[] args) {
         new Server();
-        
-        try {
-            ServerSocket skt = new ServerSocket(6001);
-            while(true) {
-                Socket s = skt.accept();
-                DataInputStream din = new DataInputStream(s.getInputStream());
-                dout = new DataOutputStream(s.getOutputStream());
+        Thread serverThread = new Thread(new ServerThread());
+        serverThread.start();
+    }
+
+    static class ServerThread implements Runnable {
+        public void run() {
+            try {
+                ServerSocket skt = new ServerSocket(6001);
                 while(true) {
-                    String msg = din.readUTF();
-                    JPanel panel = FonctionaliteCommain.formatLabel(msg,false);
-                    JPanel left = new JPanel(new BorderLayout());
-                    left.add(panel, BorderLayout.LINE_START);
-                    vertical.add(left);
-                    f.validate();
+                    Socket s = skt.accept();
+                    DataInputStream din = new DataInputStream(s.getInputStream());
+                    dout = new DataOutputStream(s.getOutputStream());
+                    while(true) {
+                        String msg = din.readUTF();
+                        JPanel panel = FonctionaliteCommain.formatLabel(msg,false);
+                        JPanel left = new JPanel(new BorderLayout());
+                        left.add(panel, BorderLayout.LINE_START);
+                        vertical.add(left);
+                        f.validate();
+                    }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
